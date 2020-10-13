@@ -8,7 +8,7 @@ def create_pluseen(id):
     if not os.path.exists('pluseens/' + id):
         with open("pluseens/" + id, 'a') as emptyfile:
             pass
-        return 'Voeg nu jouw +1 toe aan de pluseen ' + id + '!\n<br><a href="/pluseen/pluseen/'+id+'">https://m5l.nl:8080/pluseen/pluseen/'+id+'</a>'
+        return 'Voeg nu jouw +1 toe aan de pluseen ' + id + '!\n<br><a href="/pluseen/pluseen/'+id+'">https://pluseen.herokuapp.com/pluseen/pluseen/'+id+'</a>'
     return "pluseen already exists lol"
 
 def change_pluseen(id, name):
