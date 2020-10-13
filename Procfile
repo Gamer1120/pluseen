@@ -1,2 +1,1 @@
-app:view
-heroku ps:scale web=1
+web: python view.py
