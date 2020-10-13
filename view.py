@@ -55,7 +55,7 @@ def pluseen(id):
 
 @app.route("/pluseen/pluseen/<id>/<name>")
 def pluseenname(id, name):
-    if (str(id).isalnum()):
+    if (str(id).isalnum()) and (str(name).isalnum()):
         result = controller.change_pluseen(id, name)
         result += '<br><a href="/pluseen/view/' + id + '">Ga terug naar de overzichtspagina</a>'
         return result
