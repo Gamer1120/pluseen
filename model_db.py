@@ -29,7 +29,7 @@ def get_list_pluseens():
 
 def create_pluseen(id):
     do_query("INSERT INTO pluseens (name) VALUES ('" +id+"');") #TODO fix sql injection
-    return 'Voeg nu jouw +1 toe aan de pluseen ' + id + '!\n<br><a href="/pluseen/pluseen/' + id + '">https://pluseen.herokuapp.com/pluseen/pluseen/' + id + '</a>'
+    return 'Voeg nu jouw +1 toe aan de pluseen ' + id + '!\n<br><a href="/pluseen/pluseen/' + id + '">https://pluseen.herokuapp.com/pluseen/pluseen/' + id + '</a><br><br>Resultaten:<br><a href="/pluseen/view/' + id + '">https://pluseen.herokuapp.com/pluseen/view/' + id + '</a>'
 
 
 def change_pluseen(id, name):
