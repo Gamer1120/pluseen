@@ -47,7 +47,7 @@ def change_pluseen(id, name):
             #add a pluseen
             addrem = "toegevoegd"
             do_query("INSERT INTO pluseendeelnemers (pluseenid, deelnemer) VALUES (" + str(get_id_by_name(id)) + ", '" + name + "');") #TODO fix sql injection
-        return "Je pluseen is succesvol " + addrem + "!"
+        return "Je pluseen is succesvol " + addrem
     return "lol die bestaat niet"
 
 def view(id):

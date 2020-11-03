@@ -278,6 +278,8 @@ def pluseenname(id, name):
                      </script>'''
         result += '</head><body>'
         result += temp
+        if "toegevoegd" in temp:
+            result += "!"
         if "verwijderd" in temp:
             result += " :("
         result += '<br><a href="/pluseen/view/' + id + '">Ga terug naar de overzichtspagina</a></body>'
