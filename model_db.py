@@ -2,17 +2,13 @@ import os
 import psycopg2
 NAMES = ["Anne", "Hans", "Joaz", "Joël", "Lindsay", "Michael", "Michelle", "Pim", "René", "Sven"]
 
-#DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = "localhost"
+DATABASE_URL = os.environ['DATABASE_URL']
+#DATABASE_URL = "localhost"
 
 
 
 def do_query(query):
-    connection = psycopg2.connect(user="postgres",
-                                  password="root",
-                                  host="127.0.0.1",
-                                  port="5432",
-                                  database="postgres")
+    connection = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = connection.cursor()
     cursor.execute(query)
     print("query")
