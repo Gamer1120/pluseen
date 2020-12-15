@@ -290,7 +290,7 @@ def pluseenname(id, name):
 def view(id):
     if (str(id).isalnum()):
         participants = controller.view(id)
-        result = "<h1>Dit is de pluseen \""+str(id)+"\"!</h1><br><h2>+1:</h2>\n<br>"
+        result = "<h1>Dit is de pluseen \""+str(id)+"\"!</h1><h2>+1:</h2>\n<br>"
         for p in participants:
             result += p + "\n<br><br>"
         non_participants = controller.get_non_participants(id)
