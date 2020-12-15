@@ -37,11 +37,11 @@ def pluseen(id):
         <body>
         '''
         participants = controller.view(id)
-        result = "<strong>Klik op je naam om je +1 toe te voegen of weg te halen!</strong><br><strong>+1:</strong>\n<br>"
+        result = "<h1>Dit is de pluseen "+str(id)+".</h1><br><h2>Klik op je naam om je +1 toe te voegen of weg te halen!</h2><br><strong>+1:</strong>\n<br>"
         for p in participants:
             result += '<a href="/pluseen/pluseen/'+id+'/'+p+'">'+p + '</a><br><br>\n'
         non_participants = controller.get_non_participants(id)
-        result += "<strong>Geen +1:</strong>\n<br>"
+        result += "<h2>Geen +1:</h2>\n<br>"
         for np in non_participants:
             result += '<a href="/pluseen/pluseen/'+id+'/'+np+'">'+np + '</a><br><br>\n'
         # result += "asdf"
@@ -290,11 +290,11 @@ def pluseenname(id, name):
 def view(id):
     if (str(id).isalnum()):
         participants = controller.view(id)
-        result = "<strong>+1:</strong>\n<br>"
+        result = "<h1>Dit is de pluseen "+str(id)+".</h1><br><h2>+1:</h2>\n<br>"
         for p in participants:
             result += p + "\n<br><br>"
         non_participants = controller.get_non_participants(id)
-        result += "<strong>Geen +1:</strong>\n<br>"
+        result += "<h2>Geen +1:</h2>\n<br>"
         for np in non_participants:
             result += np + "\n<br><br>"
         return result
