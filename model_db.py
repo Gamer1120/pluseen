@@ -28,7 +28,7 @@ def get_list_pluseens():
     return do_query("SELECT * FROM pluseens;")
 
 def create_pluseen(id):
-    do_query("INSERT INTO pluseens (name) VALUES ('" +id+"') WHERE NOT EXISTS ( SELECT id FROM pluseens WHERE id = '" +id+"' );") #TODO fix sql injection
+    do_query("INSERT INTO pluseens (name) VALUES ('" +id+"');") #TODO fix sql injection
     return 'Voeg nu jouw +1 toe aan de pluseen ' + id + '!\n<br><a href="/pluseen/pluseen/' + id + '">https://pluseen.herokuapp.com/pluseen/pluseen/' + id + '</a><br><br>Resultaten:<br><a href="/pluseen/view/' + id + '">https://pluseen.herokuapp.com/pluseen/view/' + id + '</a>'
 
 
