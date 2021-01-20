@@ -9,3 +9,4 @@ name VARCHAR(255)
 INSERT INTO pluseens(name) VALUES ('test123');
 INSERT INTO pluseendeelnemers (pluseenid, deelnemer) VALUES (1, 'Michael');
 INSERT INTO pluseendeelnemers (pluseenid, deelnemer) VALUES (1, 'Sven');
+ALTER TABLE pluseens ADD CONSTRAINT uniquename UNIQUE (name);
