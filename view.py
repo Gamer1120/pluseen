@@ -37,10 +37,10 @@ def pluseen(id):
     if (str(id).isalnum()):
         result = '''
         <html>
-        <body>
         <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
+        <body>
         '''
         participants = controller.view(id)
         result = "<h1>Dit is de pluseen \""+str(id)+"\"!</h1><h2>Klik op je naam om je +1 toe te voegen of weg te halen!</h2><br><h2>+1:</h2>\n<br>"
