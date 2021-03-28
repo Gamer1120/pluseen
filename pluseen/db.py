@@ -56,10 +56,6 @@ def add_pluseen(pluseen_name: str) -> None:
     do_query("INSERT INTO pluseens (name) VALUES (%s) ON CONFLICT DO NOTHING;", (pluseen_name,))
 
 
-def remove_pluseen(pluseen_id: int) -> None:
-    do_query("DELETE FROM pluseens WHERE id = %s;", (pluseen_id,))
-
-
 def list_deelnemers() -> [Deelnemer]:
     return do_query("SELECT * FROM deelnemers;")
 
@@ -70,14 +66,6 @@ def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
         return results[0]
     else:
         return None
-
-
-def add_deelnemer(deelnemer_name: str) -> None:
-    do_query("INSERT INTO deelnemers (name) VALUES (%s) ON CONFLICT DO NOTHING;", (deelnemer_name,))
-
-
-def remove_deelnemer(deelnemer_id: int) -> None:
-    do_query("DELETE FROM deelnemers WHERE id = %s;", (deelnemer_id,))
 
 
 def get_statuses(pluseen_id: int) -> [Status]:

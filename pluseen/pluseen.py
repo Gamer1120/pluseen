@@ -18,17 +18,6 @@ def list_pluseens():
     return render_template("/pluseen/list_pluseens.html", pluseens=pluseens)
 
 
-# @bp.route("/pluseens", methods=["POST"])
-# def remove_pluseen():
-#     """Remove pluseen (accessible from list_pluseens)"""
-#     pluseen_name: str = request.form["pluseen_name"]
-#     pluseen = db.get_pluseen(pluseen_name)
-#     if pluseen is None:
-#         return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
-#     db.remove_pluseen(pluseen.id)
-#     return render_template("/pluseen/removed_pluseen.html", pluseen_name=pluseen_name)
-
-
 @bp.route("/pluseens/add", methods=["GET"])
 def create_pluseen():
     """Add new pluseen"""
@@ -52,33 +41,6 @@ def list_deelnemers():
     """List deelnemers"""
     deelnemers = db.list_deelnemers()
     return render_template("/pluseen/list_deelnemers.html", deelnemers=deelnemers)
-
-
-# @bp.route("/deelnemers", methods=["POST"])
-# def remove_deelnemer():
-#     """Removes deelnemer (accessible from list_deelnemers)"""
-#     deelnemer_name: str = request.form["deelnemer_name"]
-#     deelnemer = db.get_deelnemer(deelnemer_name)
-#     if deelnemer is None:
-#         return render_template("/pluseen/deelnemer_not_found.html", deelnemer_name=deelnemer_name)
-#     db.remove_deelnemer(deelnemer.id)
-#     return render_template("/pluseen/removed_deelnemer.html", deelnemer_name=deelnemer_name)
-
-
-@bp.route("/deelnemers/add", methods=["GET"])
-def create_deelnemer():
-    """Add new deelnemer"""
-    return render_template("/pluseen/create_deelnemer.html")
-
-
-@bp.route("/deelnemers/add", methods=["POST"])
-def add_deelnemer():
-    """Adds new deelnemer (accessible from create_deelnemer)"""
-    deelnemer_name: str = request.form["deelnemer_name"]
-    if db.get_deelnemer(deelnemer_name) is not None:
-        return render_template("/pluseen/create_deelnemer.html", error_msg="Deelnemer met dezelfde naam bestaat al.")
-    db.add_deelnemer(deelnemer_name)
-    return render_template("/pluseen/created_deelnemer.html", deelnemer_name=deelnemer_name)
 
 
 @bp.route("/pluseen/<pluseen_name>", methods=["GET"])
