@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% set word = "toegevoegd" if status == 1 else ("verwijderd" if status == -1 else "bijgewerkt") %}
+    <h1 class="text-center">{% block title %}Pluseen {{ word }}{% endblock %}</h1>
+    <p>Je pluseen is {{ word }}!</p>
+    <span class="text-nowrap" data-simplebar>Pluseen: {{ pluseen_name }}</span>
+    <span class="text-nowrap" data-simplebar>Deelnemer: {{ deelnemer_name }}</span>
+    {% if status > 0 %}
+        <span class="text-nowrap" data-simplebar>Status: +{{ status }}</span>
+    {% else %}
+        <span class="text-nowrap" data-simplebar>Status: {{ status }}</span>
+    {% endif %}
+    <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Ga terug naar overzicht</a>
+    <form method="post">
+        <input type="hidden" name="deelnemer_name" value="{{ deelnemer_name }}">
+        <input type="hidden" name="status" value="{{ prev_status }}">
+        <button class="btn btn-secondary w-100 h-100">Wijziging ongedaan maken</button>
+    </form>
+    {% if status == 1 %}
+        <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
+    {% endif %}
+    <script>confetti.start()</script>
+{% endblock content %}

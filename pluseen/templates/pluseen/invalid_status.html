@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">{% block title %}Ongeldige status{% endblock %}</h1>
+    <p class="text-break">De status {{ status }} is geen geldige status.</p>
+    <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Ga terug naar overzicht</a>
+{% endblock content %}

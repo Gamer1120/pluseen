@@ -1,1 +1,3 @@
-# THIS IS AN EXPERIMENT HOW MUCH BAD CODE CAN BE IN ONE REPO. DO NOT USE IN PRODUCTION!!!
+# Pluseen
+
+Create polls where people can indicate whether they are coming or not.
