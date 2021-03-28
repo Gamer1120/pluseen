@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">{% block title %}Deelnemer niet gevonden{% endblock %}</h1>
+    <p class="text-break">De deelnemer {{ deelnemer_name }} bestaat niet.</p>
+    {% if pluseen_name is defined %}
+        <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Ga terug naar overzicht</a>
+    {% else %}
+        <a href="/deelnemers" class="btn btn-primary">Ga terug naar overzicht</a>
+    {% endif %}
+{% endblock content %}

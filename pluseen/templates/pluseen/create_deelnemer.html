@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">
+        <a href="/" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
+        {% block title %}Deelnemer toevoegen{% endblock %}
+    </h1>
+    <form method="post" class="d-grid gap-2">
+        <label for="deelnemer_name" class="form-label">Deelnemer naam:</label>
+        <input type="text" id="deelnemer_name" name="deelnemer_name" class="form-control">
+        {% if error_msg is defined %}
+            <span class="text-danger">{{ error_msg }}</span>
+        {% endif %}
+        <button class="btn btn-primary">Toevoegen</button>
+    </form>
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">{% block title %}Deelnemer verwijderd{% endblock %}</h1>
+    <p class="text-break">De deelnemer {{ deelnemer_name }} is verwijderd.</p>
+    <a href="/deelnemers" class="btn btn-primary">Ga terug naar overzicht</a>
+{% endblock content %}

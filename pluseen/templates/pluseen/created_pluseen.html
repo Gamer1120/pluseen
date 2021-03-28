@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">
+        <a href="/pluseens/add" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
+        {% block title %}Pluseen aangemaakt{% endblock %}
+    </h1>
+    <p class="text-break">De pluseen {{ pluseen_name }} is aangemaakt.</p>
+    <textarea id="uitnodiging" class="form-control" rows="3" readonly aria-label="Pluseen uitnodiging">
+Voeg nu jouw +1 toe aan de pluseen {{ pluseen_name }}!
+
+https://pluseen.herokuapp.com/pluseen/{{ pluseen_name|quote }}</textarea>
+    <button id="copy-uitnodiging" type="button" class="btn btn-secondary" data-clipboard-target="#uitnodiging">
+        <i class="fas fa-clipboard-list"></i> Kopieer uitnodiging
+    </button>
+    <a class="btn btn-success" data-action="share/whatsapp/share" target="_blank"
+       href="whatsapp://send?text={{ "Voeg nu jouw +1 toe aan de pluseen "|quote + pluseen_name|quote + "!\n\nhttps://pluseen.herokuapp.com/pluseen/"|quote + pluseen_name|quote|quote }}">
+        <i class="fab fa-whatsapp"></i> Delen via WhatsApp
+    </a>
+    <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Bekijk pluseen</a>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" crossorigin="anonymous"></script>
+    <script>new ClipboardJS("#copy-uitnodiging");</script>
+{% endblock content %}
