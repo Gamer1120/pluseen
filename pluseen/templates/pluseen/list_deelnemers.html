@@ -8,33 +8,33 @@
     {% for deelnemer in deelnemers %}
         <div class="d-flex gap-2">
             <div class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</div>
-            <button class="btn btn-danger h-100" data-bs-toggle="modal" data-bs-target="#deelnemer{{ deelnemer.id }}">
-                <i class="fas fa-trash-alt"></i>
-            </button>
+<!--            <button class="btn btn-danger h-100" data-bs-toggle="modal" data-bs-target="#deelnemer{{ deelnemer.id }}">-->
+<!--                <i class="fas fa-trash-alt"></i>-->
+<!--            </button>-->
         </div>
-        <div id="deelnemer{{ deelnemer.id }}" class="modal fade" tabindex="-1">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Deelnemer verwijderen</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-break">
-                            Weet je zeker dat je de deelnemer {{ deelnemer.name }} wilt verwijderen?
-                            <span class="fw-bold">Alle data van deze deelnemer gaat verloren!</span>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleer</button>
-                        <form method="post">
-                            <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                            <button class="btn btn-danger h-100">Verwijderen</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div id="deelnemer{{ deelnemer.id }}" class="modal fade" tabindex="-1">-->
+<!--            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title">Deelnemer verwijderen</h5>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <p class="text-break">-->
+<!--                            Weet je zeker dat je de deelnemer {{ deelnemer.name }} wilt verwijderen?-->
+<!--                            <span class="fw-bold">Alle data van deze deelnemer gaat verloren!</span>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleer</button>-->
+<!--                        <form method="post">-->
+<!--                            <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">-->
+<!--                            <button class="btn btn-danger h-100">Verwijderen</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     {% endfor %}
     <hr>
     <h5 class="text-center">Deelnemer toevoegen</h5>

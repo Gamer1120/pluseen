@@ -18,15 +18,15 @@ def list_pluseens():
     return render_template("/pluseen/list_pluseens.html", pluseens=pluseens)
 
 
-@bp.route("/pluseens", methods=["POST"])
-def remove_pluseen():
-    """Remove pluseen (accessible from list_pluseens)"""
-    pluseen_name: str = request.form["pluseen_name"]
-    pluseen = db.get_pluseen(pluseen_name)
-    if pluseen is None:
-        return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
-    db.remove_pluseen(pluseen.id)
-    return render_template("/pluseen/removed_pluseen.html", pluseen_name=pluseen_name)
+# @bp.route("/pluseens", methods=["POST"])
+# def remove_pluseen():
+#     """Remove pluseen (accessible from list_pluseens)"""
+#     pluseen_name: str = request.form["pluseen_name"]
+#     pluseen = db.get_pluseen(pluseen_name)
+#     if pluseen is None:
+#         return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
+#     db.remove_pluseen(pluseen.id)
+#     return render_template("/pluseen/removed_pluseen.html", pluseen_name=pluseen_name)
 
 
 @bp.route("/pluseens/add", methods=["GET"])
@@ -54,15 +54,15 @@ def list_deelnemers():
     return render_template("/pluseen/list_deelnemers.html", deelnemers=deelnemers)
 
 
-@bp.route("/deelnemers", methods=["POST"])
-def remove_deelnemer():
-    """Removes deelnemer (accessible from list_deelnemers)"""
-    deelnemer_name: str = request.form["deelnemer_name"]
-    deelnemer = db.get_deelnemer(deelnemer_name)
-    if deelnemer is None:
-        return render_template("/pluseen/deelnemer_not_found.html", deelnemer_name=deelnemer_name)
-    db.remove_deelnemer(deelnemer.id)
-    return render_template("/pluseen/removed_deelnemer.html", deelnemer_name=deelnemer_name)
+# @bp.route("/deelnemers", methods=["POST"])
+# def remove_deelnemer():
+#     """Removes deelnemer (accessible from list_deelnemers)"""
+#     deelnemer_name: str = request.form["deelnemer_name"]
+#     deelnemer = db.get_deelnemer(deelnemer_name)
+#     if deelnemer is None:
+#         return render_template("/pluseen/deelnemer_not_found.html", deelnemer_name=deelnemer_name)
+#     db.remove_deelnemer(deelnemer.id)
+#     return render_template("/pluseen/removed_deelnemer.html", deelnemer_name=deelnemer_name)
 
 
 @bp.route("/deelnemers/add", methods=["GET"])
