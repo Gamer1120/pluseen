@@ -41,7 +41,7 @@ def do_query(query: str, vars: tuple = None):
 
 
 def list_pluseens() -> [Pluseen]:
-    return do_query("SELECT * FROM pluseens;")
+    return do_query("SELECT * FROM pluseens ORDER BY name;")
 
 
 def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:
@@ -57,7 +57,7 @@ def add_pluseen(pluseen_name: str) -> None:
 
 
 def list_deelnemers() -> [Deelnemer]:
-    return do_query("SELECT * FROM deelnemers;")
+    return do_query("SELECT * FROM deelnemers ORDER BY name;")
 
 
 def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
@@ -70,7 +70,7 @@ def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
 
 def get_statuses(pluseen_id: int) -> [Status]:
     return do_query(
-        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status FROM deelnemers d LEFT JOIN (SELECT p.deelnemer_id, p.status FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id",
+        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status FROM deelnemers d LEFT JOIN (SELECT p.deelnemer_id, p.status FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id ORDER BY d.name",
         (pluseen_id,)
     )
 
