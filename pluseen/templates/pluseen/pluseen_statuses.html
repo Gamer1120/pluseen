@@ -3,21 +3,21 @@
 {% block content %}
     <h1 class="text-center text-nowrap" style="overflow-y: hidden;" data-simplebar>{% block title %}{{ pluseen_name }}{% endblock %}</h1>
     {% if 1 in pluseen_statuses|map(attribute="status") %}
-        <h5 class="fw-bolder"><i class="fas fa-plus"></i>1</h5>
+        <h5 class="fw-bold"><i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 1 %}
             <div class="d-flex gap-2">
                 <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="0">
-                    <button class="btn btn-warning fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-warning fw-bold h-100" style="width: 3.1em;">
                         0
                     </button>
                 </form>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="-1">
-                    <button class="btn btn-danger fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-danger fw-bold h-100" style="width: 3.1em;">
                         <i class="fas fa-minus"></i>1
                     </button>
                 </form>
@@ -25,21 +25,21 @@
         {% endfor %}
     {% endif %}
     {% if 0 in pluseen_statuses|map(attribute="status") %}
-        <h5 class="fw-bolder">Geen <i class="fas fa-plus"></i>1</h5>
+        <h5 class="fw-bold">Geen <i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 0 %}
             <div class="d-flex gap-2">
                 <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="1">
-                    <button class="btn btn-success fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-success fw-bold h-100" style="width: 3.1em;">
                         <i class="fas fa-plus"></i>1
                     </button>
                 </form>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="-1">
-                    <button class="btn btn-danger fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-danger fw-bold h-100" style="width: 3.1em;">
                         <i class="fas fa-minus"></i>1
                     </button>
                 </form>
@@ -47,21 +47,21 @@
         {% endfor %}
     {% endif %}
     {% if -1 in pluseen_statuses|map(attribute="status") %}
-        <h5 class="fw-bolder"><i class="fas fa-minus"></i>1</h5>
+        <h5 class="fw-bold"><i class="fas fa-minus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == -1 %}
             <div class="d-flex gap-2">
                 <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="0">
-                    <button class="btn btn-warning fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-warning fw-bold h-100" style="width: 3.1em;">
                         0
                     </button>
                 </form>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="1">
-                    <button class="btn btn-success fw-bolder h-100" style="width: 3.1em">
+                    <button class="btn btn-success fw-bold h-100" style="width: 3.1em;">
                         <i class="fas fa-plus"></i>1
                     </button>
                 </form>
