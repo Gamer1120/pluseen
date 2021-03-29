@@ -4,14 +4,14 @@ DROP TABLE IF EXISTS pluseens;
 
 CREATE TABLE pluseens
 (
-    id   SERIAL PRIMARY KEY,
-    name TEXT UNIQUE
+    id   SERIAL NOT NULL PRIMARY KEY,
+    name TEXT   NOT NULL UNIQUE
 );
 
 CREATE TABLE deelnemers
 (
-    id   SERIAL PRIMARY KEY,
-    name TEXT UNIQUE
+    id   SERIAL NOT NULL PRIMARY KEY,
+    name TEXT   NOT NULL UNIQUE
 );
 INSERT INTO deelnemers (name)
 VALUES ('Anne'),
@@ -27,9 +27,9 @@ VALUES ('Anne'),
 
 CREATE TABLE pluseendeelnemers
 (
-    pluseen_id   INT,
-    deelnemer_id INT,
-    status       INT,
+    pluseen_id   INT NOT NULL,
+    deelnemer_id INT NOT NULL,
+    status       INT NOT NULL,
     PRIMARY KEY (pluseen_id, deelnemer_id),
     FOREIGN KEY (pluseen_id) REFERENCES pluseens (id) ON DELETE CASCADE,
     FOREIGN KEY (deelnemer_id) REFERENCES deelnemers (id) ON DELETE CASCADE
