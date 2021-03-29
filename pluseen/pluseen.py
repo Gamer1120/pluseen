@@ -28,6 +28,8 @@ def create_pluseen():
 def add_pluseen():
     """Adds new pluseen (accessible from create_pluseen)"""
     pluseen_name: str = request.form["pluseen_name"]
+    if not pluseen_name or pluseen_name.isspace():
+        return render_template("/pluseen/create_pluseen.html", error_msg="Pluseen naam mag niet leeg zijn.")
     if '/' in pluseen_name:
         return render_template("/pluseen/create_pluseen.html", error_msg="Pluseen naam mag geen \"/\" bevatten.")
     elif db.get_pluseen(pluseen_name) is not None:
