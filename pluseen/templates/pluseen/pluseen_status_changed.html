@@ -18,7 +18,7 @@
         <button class="btn btn-secondary w-100 h-100">Wijziging ongedaan maken</button>
     </form>
     {% if status == 1 %}
-        <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
-        <script>confetti.start()</script> 
+        <script src="{{ url_for('static', filename='confetti.min.js') }}"></script>
+        <script>confetti.start()</script>
     {% endif %}
 {% endblock content %}
