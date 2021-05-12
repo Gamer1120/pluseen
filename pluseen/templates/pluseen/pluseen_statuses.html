@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="text-center text-nowrap" style="overflow-y: hidden;" data-simplebar>{% block title %}{{ pluseen_name }}{% endblock %}</h1>
+    <h1 class="text-center">
+        <a href="/pluseens" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
+        <div class="text-nowrap" style="margin-left: 50px; overflow-y: hidden;" data-simplebar>{% block title %}{{ pluseen_name }}{% endblock %}</div>
+    </h1>
     {% if 1 in pluseen_statuses|map(attribute="status") %}
         <h5 class="fw-bold"><i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 1 %}
