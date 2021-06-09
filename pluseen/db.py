@@ -26,6 +26,7 @@ def close_db(e=None):
 
 
 def do_query(query: str, vars: tuple = None):
+    print(query)
     db = get_db()
     cursor = db.cursor()
     try:
