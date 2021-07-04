@@ -13,20 +13,57 @@ Deelnemer = NamedTuple("Record", [("id", int), ("name", str)])
 Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int)])
 
 
-def get_db():
+def get_db() -> psycopg2._psycopg.connection:
     if 'db' not in g:
         g.db = psycopg2.connect(DATABASE_URL, cursor_factory=NamedTupleCursor, sslmode="prefer")
+        init_db()
     return g.db
 
 
-def close_db(e=None):
+db_definition = {
+    "pluseens": {
+        "id": "SERIAL NOT NULL PRIMARY KEY",
+        "name": "TEXT NOT NULL UNIQUE",
+        "description": "TEXT",
+        "created_at": "TIMESTAMPTZ NOT NULL DEFAULT now()"
+    },
+    "deelnemers": {
+        "id": "SERIAL NOT NULL PRIMARY KEY",
+        "name": "TEXT NOT NULL UNIQUE"
+    },
+    "pluseendeelnemers": {
+        "pluseen_id": "INT NOT NULL REFERENCES pluseens (id) ON DELETE CASCADE",
+        "deelnemer_id": "INT NOT NULL REFERENCES deelnemers (id) ON DELETE CASCADE",
+        "status": "INT NOT NULL",
+        "comment": "TEXT",
+        "updated_at": "TIMESTAMPTZ NOT NULL DEFAULT now()"
+    }
+}
+
+
+def init_db() -> None:
+    table_query = do_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+    db_tables = list(map(lambda x: x.table_name, table_query))
+    for (table, table_definition) in db_definition.items():
+        if table in db_tables:
+            column_query = do_query("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = %s;", (table,))
+            table_columns = list(map(lambda x: x.column_name, column_query))
+            for (column, column_definition) in table_definition.items():
+                if column not in table_columns:
+                    do_query(f"ALTER TABLE {table} ADD COLUMN {column} {column_definition};")
+        else:
+            table_definition = ",".join(" ".join(_) for _ in table_definition.items())
+            do_query(f"CREATE TABLE {table} ({table_definition});")
+
+
+def close_db(e=None) -> None:
     db = g.pop('db', None)
     if db is not None:
         db.close()
 
 
 def do_query(query: str, vars: tuple = None):
-    print(query)
+    print(query, vars)
     db = get_db()
     cursor = db.cursor()
     try:
@@ -53,8 +90,8 @@ def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:
         return None
 
 
-def add_pluseen(pluseen_name: str) -> None:
-    do_query("INSERT INTO pluseens (name) VALUES (%s) ON CONFLICT DO NOTHING;", (pluseen_name,))
+def add_pluseen(pluseen_name: str, description: str = None) -> None:
+    do_query("INSERT INTO pluseens (name, description, created_at) VALUES (%s, %s, now()) ON CONFLICT DO NOTHING;", (pluseen_name, description))
 
 
 def list_deelnemers() -> [Deelnemer]:
@@ -87,8 +124,8 @@ def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
         return None
 
 
-def set_status(pluseen_id: int, deelnemer_id: int, status: int) -> None:
+def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: str = None) -> None:
     do_query(
-        "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status) VALUES (%s, %s, %s) ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status;",
-        (pluseen_id, deelnemer_id, status)
+        "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status, comment, updated_at) VALUES (%s, %s, %s, %s, now()) ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status, comment=excluded.comment, updated_at=now();",
+        (pluseen_id, deelnemer_id, status, comment)
     )
