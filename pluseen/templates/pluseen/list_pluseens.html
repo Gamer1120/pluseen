@@ -6,7 +6,8 @@
         {% block title %}Pluseens{% endblock %}
     </h1>
     {% for pluseen in pluseens %}
-        <div class="d-flex gap-2">
+        <div class="d-flex btn-group">
+            <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-secondary flex-grow-0 h-100">{{ pluseen.created_at|time }}</a>
             <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-primary flex-grow-1 h-100 text-nowrap" data-simplebar>{{ pluseen.name }}</a>
         </div>
     {% endfor %}

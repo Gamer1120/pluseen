@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from typing import NamedTuple, Optional
 
 import psycopg2
@@ -8,9 +9,9 @@ from psycopg2.extras import NamedTupleCursor
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/postgres")
 
 # Types
-Pluseen = NamedTuple("Record", [("id", int), ("name", str)])
+Pluseen = NamedTuple("Record", [("id", int), ("name", str), ("description", str), ("created_at", datetime)])
 Deelnemer = NamedTuple("Record", [("id", int), ("name", str)])
-Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int)])
+Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int), ("comment", str), ("updated_at", datetime)])
 
 
 def get_db() -> psycopg2._psycopg.connection:
@@ -79,7 +80,7 @@ def do_query(query: str, vars: tuple = None):
 
 
 def list_pluseens() -> [Pluseen]:
-    return do_query("SELECT * FROM pluseens ORDER BY name;")
+    return do_query("SELECT * FROM pluseens ORDER BY created_at DESC, name;")
 
 
 def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:
@@ -108,14 +109,14 @@ def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
 
 def get_statuses(pluseen_id: int) -> [Status]:
     return do_query(
-        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status FROM deelnemers d LEFT JOIN (SELECT p.deelnemer_id, p.status FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id ORDER BY d.name",
+        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at FROM deelnemers d LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id ORDER BY d.name",
         (pluseen_id,)
     )
 
 
 def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
     results = do_query(
-        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status FROM deelnemers d LEFT JOIN (SELECT p.deelnemer_id, p.status FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id WHERE d.name = %s",
+        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at FROM deelnemers d LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id WHERE d.name = %s",
         (pluseen_id, deelnemer_name)
     )
     if len(results) == 1:
