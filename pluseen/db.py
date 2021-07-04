@@ -80,7 +80,7 @@ def do_query(query: str, vars: Optional[tuple] = None):
 
 
 def list_pluseens() -> [Pluseen]:
-    return do_query("SELECT * FROM pluseens ORDER BY created_at DESC, name;")
+    return do_query("SELECT * FROM pluseens ORDER BY DATE_TRUNC('day', created_at) DESC, LOWER(name);")
 
 
 def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:

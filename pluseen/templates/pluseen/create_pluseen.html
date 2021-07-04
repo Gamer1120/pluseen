@@ -9,7 +9,7 @@
 {% endblock content %}
 
 {% macro create_pluseen() %}
-    <form method="post" class="d-grid gap-2">
+    <form action="/pluseens/add" method="post" class="d-grid gap-2">
         <label for="pluseen_name" class="form-label">Pluseen naam:</label>
         <input type="text" id="pluseen_name" name="pluseen_name" class="form-control">
         <label for="pluseen_description" class="form-label">Pluseen beschrijving (optioneel):</label>
