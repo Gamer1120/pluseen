@@ -125,7 +125,7 @@ def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
         return None
 
 
-def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: Optional[str] = None) -> None:
+def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: Optional[str]) -> None:
     do_query(
         "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status, comment, updated_at) VALUES (%s, %s, %s, %s, now()) ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status, comment=excluded.comment, updated_at=now();",
         (pluseen_id, deelnemer_id, status, comment)

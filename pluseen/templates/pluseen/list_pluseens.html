@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "pluseen/create_pluseen.html" import create_pluseen %}
 
 {% block content %}
     <h1 class="text-center">
@@ -7,17 +8,11 @@
     </h1>
     {% for pluseen in pluseens %}
         <div class="d-flex btn-group">
-            <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-secondary flex-grow-0 h-100">{{ pluseen.created_at|time }}</a>
+            <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-secondary flex-grow-0 h-100 text-nowrap">{{ pluseen.created_at|time }}</a>
             <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-primary flex-grow-1 h-100 text-nowrap" data-simplebar>{{ pluseen.name }}</a>
         </div>
     {% endfor %}
     <hr>
     <h5 class="text-center">Pluseen aanmaken</h5>
-    <form action="/pluseens/add" method="post" class="d-grid gap-2">
-        <label for="pluseen_name" class="form-label">Pluseen naam:</label>
-        <input type="text" id="pluseen_name" name="pluseen_name" class="form-control">
-        <label for="pluseen_description" class="form-label">Pluseen beschrijving (optioneel):</label>
-        <textarea id="pluseen_description" name="pluseen_description" class="form-control" rows="5"></textarea>
-        <button class="btn btn-primary">Toevoegen</button>
-    </form>
+    {{ create_pluseen() }}
 {% endblock content %}

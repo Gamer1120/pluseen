@@ -1,6 +1,7 @@
 from typing import Optional
+from urllib.parse import quote
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, redirect, request
 
 from pluseen import db
 
@@ -75,5 +76,21 @@ def set_pluseen_status(pluseen_name: str):
     status = int(request.form["status"])
     if status < -1 or status > 1:
         return render_template("/pluseen/invalid_status.html", pluseen_name=pluseen_name, deelnemer_name=deelnemer_name, status=status)
-    db.set_status(pluseen.id, deelnemer.id, status)
+    db.set_status(pluseen.id, deelnemer.id, status, deelnemer.comment)
     return render_template("/pluseen/pluseen_status_changed.html", pluseen_name=pluseen_name, deelnemer_name=deelnemer_name, prev_status=deelnemer.status, status=status)
+
+
+@bp.route("/pluseen/<pluseen_name>/<deelnemer_name>", methods=["POST"])
+def set_pluseen_comment(pluseen_name: str, deelnemer_name: str):
+    """Sets pluseen comment (accessible from get_pluseen_statuses)"""
+    pluseen = db.get_pluseen(pluseen_name)
+    if pluseen is None:
+        return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
+    deelnemer = db.get_status(pluseen.id, deelnemer_name)
+    if deelnemer is None:
+        return render_template("/pluseen/deelnemer_not_found.html", pluseen_name=pluseen_name, deelnemer_name=deelnemer_name)
+    comment = request.form["comment"]
+    if not comment or comment.isspace():
+        comment = None
+    db.set_status(pluseen.id, deelnemer.id, deelnemer.status, comment)
+    return redirect("/pluseen/" + quote(pluseen_name), code=302)

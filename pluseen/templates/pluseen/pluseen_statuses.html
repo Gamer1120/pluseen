@@ -3,75 +3,101 @@
 {% block content %}
     <h1 class="text-center">
         <a href="/pluseens" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
-        <div class="text-nowrap" style="margin-left: 50px; overflow-y: hidden;" data-simplebar>{% block title %}{{ pluseen_name }}{% endblock %}</div>
+        <div class="text-nowrap" style="margin-left: 50px; overflow-y: hidden;" data-simplebar>
+            {% block title %}{{ pluseen_name }}{% endblock %}</div>
     </h1>
     {% if pluseen_description %}
-        <span style="white-space: pre-wrap; word-break: break-word">{{ pluseen_description }}</span>
+        <span class="text-break" style="white-space: pre-wrap;">{{ pluseen_description }}</span>
     {% endif %}
     {% if 1 in pluseen_statuses|map(attribute="status") %}
         <h5 class="fw-bold"><i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 1 %}
-            <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="0">
-                    <button class="btn btn-warning fw-bold h-100" style="width: 3.1em;">
-                        0
-                    </button>
-                </form>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="-1">
-                    <button class="btn btn-danger fw-bold h-100" style="width: 3.1em;">
-                        <i class="fas fa-minus"></i>1
-                    </button>
-                </form>
-            </div>
+            {{ status(deelnemer) }}
         {% endfor %}
     {% endif %}
     {% if 0 in pluseen_statuses|map(attribute="status") %}
         <h5 class="fw-bold">Geen <i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 0 %}
-            <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="1">
-                    <button class="btn btn-success fw-bold h-100" style="width: 3.1em;">
-                        <i class="fas fa-plus"></i>1
-                    </button>
-                </form>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="-1">
-                    <button class="btn btn-danger fw-bold h-100" style="width: 3.1em;">
-                        <i class="fas fa-minus"></i>1
-                    </button>
-                </form>
-            </div>
+            {{ status(deelnemer) }}
         {% endfor %}
     {% endif %}
     {% if -1 in pluseen_statuses|map(attribute="status") %}
         <h5 class="fw-bold"><i class="fas fa-minus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == -1 %}
-            <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="0">
-                    <button class="btn btn-warning fw-bold h-100" style="width: 3.1em;">
-                        0
-                    </button>
-                </form>
-                <form method="post">
-                    <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
-                    <input type="hidden" name="status" value="1">
-                    <button class="btn btn-success fw-bold h-100" style="width: 3.1em;">
-                        <i class="fas fa-plus"></i>1
-                    </button>
-                </form>
-            </div>
+            {{ status(deelnemer) }}
         {% endfor %}
     {% endif %}
 {% endblock content %}
+
+{% macro status(deelnemer) %}
+    <div class="d-flex gap-2">
+        <div class="d-flex flex-grow-1 btn-group">
+            {% if deelnemer.comment %}
+                <span class="bg-light text-center rounded-2 p-2 h-100 text-nowrap" style="width: 8em;">{{ deelnemer.name }}</span>
+                <span class="flex-grow-1 p-2 h-100 text-nowrap" style="background-color: #dee2e6;" data-simplebar>
+                    <span class="p-2">{{ deelnemer.comment }}</span>
+                </span>
+            {% else %}
+                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap">{{ deelnemer.name }}</span>
+            {% endif %}
+            <button type="button" class="btn btn-primary flex-grow-0 fw-bold h-100" style="width: 3.1em;" data-bs-toggle="modal" data-bs-target="#comment{{ deelnemer.id }}">
+                <i class="fas fa-comment-dots"></i>
+            </button>
+        </div>
+        {% if deelnemer.status != 0 %}
+            <form method="post">
+                <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
+                <input type="hidden" name="status" value="0">
+                <button class="btn btn-warning fw-bold h-100" style="width: 3.1em;">
+                    0
+                </button>
+            </form>
+        {% endif %}
+        {% if deelnemer.status != 1 %}
+            <form method="post">
+                <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
+                <input type="hidden" name="status" value="1">
+                <button class="btn btn-success fw-bold h-100" style="width: 3.1em;">
+                    <i class="fas fa-plus"></i>1
+                </button>
+            </form>
+        {% endif %}
+        {% if deelnemer.status != -1 %}
+            <form method="post">
+                <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
+                <input type="hidden" name="status" value="-1">
+                <button class="btn btn-danger fw-bold h-100" style="width: 3.1em;">
+                    <i class="fas fa-minus"></i>1
+                </button>
+            </form>
+        {% endif %}
+        <div class="modal fade" id="comment{{ deelnemer.id }}" tabindex="-1" aria-labelledby="commentLabel{{ deelnemer.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="commentLabel{{ deelnemer.id }}">Comment aanpassen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sluiten"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="commentUpdate{{ deelnemer.id }}" action="/pluseen/{{ pluseen_name|quote }}/{{ deelnemer.name|quote }}" method="post">
+                            {% if deelnemer.comment %}
+                                <input type="text" class="form-control" name="comment" aria-label="Comment aanpassen" autocomplete="off" value="{{ deelnemer.comment }}">
+                            {% else %}
+                                <input type="text" class="form-control" name="comment" aria-label="Comment aanpassen" autocomplete="off">
+                            {% endif %}
+                        </form>
+                        <form id="commentDelete{{ deelnemer.id }}" action="/pluseen/{{ pluseen_name|quote }}/{{ deelnemer.name|quote }}" method="post">
+                            <input type="hidden" name="comment">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        {% if deelnemer.comment %}
+                            <button class="btn btn-danger" form="commentDelete{{ deelnemer.id }}">Verwijderen</button>
+                        {% endif %}
+                        <button class="btn btn-primary" form="commentUpdate{{ deelnemer.id }}">Opslaan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
