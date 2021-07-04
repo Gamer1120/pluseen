@@ -8,11 +8,11 @@
     </h1>
     <p>Je pluseen is {{ word }}!</p>
     <span class="text-nowrap" data-simplebar>Pluseen: {{ pluseen_name }}</span>
-    <span class="text-nowrap" data-simplebar>Deelnemer: {{ deelnemer_name }}</span>
+    <span>Deelnemer: {{ deelnemer_name }}</span>
     {% if status > 0 %}
-        <span class="text-nowrap" data-simplebar>Status: +{{ status }}</span>
+        <span>Status: +{{ status }}</span>
     {% else %}
-        <span class="text-nowrap" data-simplebar>Status: {{ status }}</span>
+        <span>Status: {{ status }}</span>
     {% endif %}
     <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Ga terug naar overzicht</a>
     <form method="post">

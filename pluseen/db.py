@@ -63,7 +63,7 @@ def close_db(e=None) -> None:
         db.close()
 
 
-def do_query(query: str, vars: tuple = None):
+def do_query(query: str, vars: Optional[tuple] = None):
     print(query, vars)
     db = get_db()
     cursor = db.cursor()
@@ -91,7 +91,7 @@ def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:
         return None
 
 
-def add_pluseen(pluseen_name: str, description: str = None) -> None:
+def add_pluseen(pluseen_name: str, description: Optional[str] = None) -> None:
     do_query("INSERT INTO pluseens (name, description, created_at) VALUES (%s, %s, now()) ON CONFLICT DO NOTHING;", (pluseen_name, description))
 
 
@@ -125,7 +125,7 @@ def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
         return None
 
 
-def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: str = None) -> None:
+def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: Optional[str] = None) -> None:
     do_query(
         "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status, comment, updated_at) VALUES (%s, %s, %s, %s, now()) ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status, comment=excluded.comment, updated_at=now();",
         (pluseen_id, deelnemer_id, status, comment)

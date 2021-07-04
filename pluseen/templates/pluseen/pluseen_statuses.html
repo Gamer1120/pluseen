@@ -5,11 +5,14 @@
         <a href="/pluseens" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
         <div class="text-nowrap" style="margin-left: 50px; overflow-y: hidden;" data-simplebar>{% block title %}{{ pluseen_name }}{% endblock %}</div>
     </h1>
+    {% if pluseen_description %}
+        <span style="white-space: pre-wrap; word-break: break-word">{{ pluseen_description }}</span>
+    {% endif %}
     {% if 1 in pluseen_statuses|map(attribute="status") %}
         <h5 class="fw-bold"><i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 1 %}
             <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
+                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="0">
@@ -31,7 +34,7 @@
         <h5 class="fw-bold">Geen <i class="fas fa-plus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == 0 %}
             <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
+                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="1">
@@ -53,7 +56,7 @@
         <h5 class="fw-bold"><i class="fas fa-minus"></i>1</h5>
         {% for deelnemer in pluseen_statuses if deelnemer.status == -1 %}
             <div class="d-flex gap-2">
-                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap" data-simplebar>{{ deelnemer.name }}</span>
+                <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100">{{ deelnemer.name }}</span>
                 <form method="post">
                     <input type="hidden" name="deelnemer_name" value="{{ deelnemer.name }}">
                     <input type="hidden" name="status" value="0">

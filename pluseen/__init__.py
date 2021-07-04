@@ -8,7 +8,7 @@ def create_app():
     app.jinja_env.filters['quote'] = lambda u: quote(u)
 
     from pytz import timezone
-    app.jinja_env.filters['time'] = lambda t: t.astimezone(timezone("Europe/Amsterdam")).strftime('%d-%m-%Y %H:%M:%S')
+    app.jinja_env.filters['time'] = lambda t: t.astimezone(timezone('Europe/Amsterdam')).strftime('%d-%m-%Y %H:%M:%S')
 
     from pluseen import db
     app.teardown_appcontext(db.close_db)
