@@ -10,6 +10,32 @@
         <div class="d-flex btn-group">
             <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-secondary flex-grow-0 h-100 text-nowrap">{{ pluseen.created_at|time }}</a>
             <a href="/pluseen/{{ pluseen.name|quote }}" class="btn btn-primary flex-grow-1 h-100 text-nowrap" data-simplebar>{{ pluseen.name }}</a>
+            <button class="btn btn-danger h-100" data-bs-toggle="modal" data-bs-target="#pluseen{{ pluseen.id }}">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+        <div id="pluseen{{ pluseen.id }}" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Deelnemer verwijderen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-break">
+                            Weet je zeker dat je de pluseen {{ pluseen.name }} wilt verwijderen?
+                            <span class="fw-bold">Alle data van deze pluseen gaat verloren!</span>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleer</button>
+                        <form method="post">
+                            <input type="hidden" name="pluseen_name" value="{{ pluseen.name }}">
+                            <button class="btn btn-danger h-100">Verwijderen</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     {% endfor %}
     <hr>
