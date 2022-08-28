@@ -20,3 +20,5 @@ services:
       - POSTGRES_USER=pluseen
       - POSTGRES_PASSWORD=gerelateerd
       - POSTGRES_DB=pluseen
+    volumes:
+      - ./data:/var/lib/postgresql/data
