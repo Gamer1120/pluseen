@@ -1,0 +1,22 @@
+# Example docker-compose file for running the application
+version: "3.9"
+services:
+  pluseen:
+    image: ghcr.io/gamer1120/pluseen:master # Pull prebuilt version
+#    build: . # Build local version
+    restart: unless-stopped
+    container_name: pluseen
+    ports:
+      - 80:80
+    environment:
+      - TZ=Europe/Amsterdam
+      - DATABASE_URL=postgresql://pluseen:gerelateerd@postgres:5432/pluseen
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+    container_name: pluseen-postgres
+    environment:
+      - TZ=Europe/Amsterdam
+      - POSTGRES_USER=pluseen
+      - POSTGRES_PASSWORD=gerelateerd
+      - POSTGRES_DB=pluseen
