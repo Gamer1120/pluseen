@@ -17,6 +17,7 @@ CREATE TABLE deelnemers
 );
 INSERT INTO deelnemers (name)
 VALUES ('Anne'),
+       ('Cathy'),
        ('Hans'),
        ('Joaz'),
        ('Joël'),

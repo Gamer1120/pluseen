@@ -37,7 +37,8 @@ db_definition = {
         "deelnemer_id": "INT NOT NULL REFERENCES deelnemers (id) ON DELETE CASCADE",
         "status": "INT NOT NULL",
         "comment": "TEXT",
-        "updated_at": "TIMESTAMPTZ NOT NULL DEFAULT now()"
+        "updated_at": "TIMESTAMPTZ NOT NULL DEFAULT now()",
+        "": "PRIMARY KEY (pluseen_id, deelnemer_id)"
     }
 }
 
@@ -50,7 +51,7 @@ def init_db() -> None:
             column_query = do_query("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = %s;", (table,))
             table_columns = list(map(lambda x: x.column_name, column_query))
             for (column, column_definition) in table_definition.items():
-                if column not in table_columns:
+                if column and column not in table_columns:
                     do_query(f"ALTER TABLE {table} ADD COLUMN {column} {column_definition};")
         else:
             table_definition = ",".join(" ".join(_) for _ in table_definition.items())
