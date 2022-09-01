@@ -17,7 +17,6 @@ Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int), ("co
 def get_db() -> psycopg2._psycopg.connection:
     if 'db' not in g:
         g.db = psycopg2.connect(DATABASE_URL, cursor_factory=NamedTupleCursor, sslmode="prefer")
-        init_db()
     return g.db
 
 

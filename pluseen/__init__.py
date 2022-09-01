@@ -16,4 +16,7 @@ def create_app():
     from pluseen import pluseen
     app.register_blueprint(pluseen.bp)
 
+    with app.app_context():
+        db.init_db()
+
     return app
