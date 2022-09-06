@@ -43,7 +43,7 @@ def add_pluseen():
     else:
         pluseen_description = pluseen_description.replace("\r", "")
     db.add_pluseen(pluseen_name, pluseen_description)
-    return render_template("/pluseen/created_pluseen.html", pluseen_name=pluseen_name)
+    return render_template("/pluseen/created_pluseen.html", pluseen_name=pluseen_name, pluseen_description=pluseen_description)
 
 
 @bp.route("/deelnemers", methods=["GET"])
