@@ -14,7 +14,7 @@ https://{{ request.host }}/pluseen/{{ pluseen_name|quote }}</textarea>
         <i class="fas fa-clipboard-list"></i> Kopieer uitnodiging
     </button>
     <a class="btn btn-success" data-action="share/whatsapp/share" target="_blank"
-       href="whatsapp://send?text={{ ("Voeg nu jouw +1 toe aan de pluseen " + pluseen_name + "!\n\n" + pluseen_description + "\n\nhttps://" + request.host + "/pluseen/" + pluseen_name|quote)|quote }}">
+       href="whatsapp://send?text={{ ("Voeg nu jouw +1 toe aan de pluseen " + pluseen_name + "!\n" + pluseen_description + "\nhttps://" + request.host + "/pluseen/" + pluseen_name|quote)|quote }}">
         <i class="fab fa-whatsapp"></i> Delen via WhatsApp
     </a>
     <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Bekijk pluseen</a>
