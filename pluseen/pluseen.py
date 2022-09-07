@@ -37,13 +37,18 @@ def add_pluseen():
         return render_template("/pluseen/create_pluseen.html", error_msg="Pluseen naam mag geen \"/\" bevatten.")
     elif db.get_pluseen(pluseen_name) is not None:
         return render_template("/pluseen/create_pluseen.html", error_msg="Pluseen met dezelfde naam bestaat al.")
+    pluseen_invitation_lines = [f"Voeg nu jouw +1 toe aan de pluseen {pluseen_name}!"]
     pluseen_description: Optional[str] = request.form["pluseen_description"]
     if not pluseen_description or pluseen_description.isspace():
         pluseen_description = None
     else:
         pluseen_description = pluseen_description.replace("\r", "")
+        pluseen_invitation_lines.append(pluseen_description)
+    pluseen_url = f"https://{request.host}/pluseen/{quote(pluseen_name)}"
+    pluseen_invitation_lines.append(pluseen_url)
+    pluseen_invitation = "\n".join(pluseen_invitation_lines)
     db.add_pluseen(pluseen_name, pluseen_description)
-    return render_template("/pluseen/created_pluseen.html", pluseen_name=pluseen_name, pluseen_description=pluseen_description)
+    return render_template("/pluseen/created_pluseen.html", pluseen_name=pluseen_name, pluseen_invitation=pluseen_invitation)
 
 
 @bp.route("/deelnemers", methods=["GET"])

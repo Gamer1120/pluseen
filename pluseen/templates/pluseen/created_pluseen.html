@@ -6,15 +6,12 @@
         {% block title %}Pluseen aangemaakt{% endblock %}
     </h1>
     <p class="text-break">De pluseen {{ pluseen_name }} is aangemaakt.</p>
-    <textarea id="uitnodiging" class="form-control" rows="3" readonly aria-label="Pluseen uitnodiging">
-Voeg nu jouw +1 toe aan de pluseen {{ pluseen_name }}!
-{{ pluseen_description }}
-https://{{ request.host }}/pluseen/{{ pluseen_name|quote }}</textarea>
+    <textarea id="uitnodiging" class="form-control" rows="5" readonly aria-label="Pluseen uitnodiging">{{ pluseen_invitation }}</textarea>
     <button id="copy-uitnodiging" type="button" class="btn btn-secondary" data-clipboard-target="#uitnodiging">
         <i class="fas fa-clipboard-list"></i> Kopieer uitnodiging
     </button>
     <a class="btn btn-success" data-action="share/whatsapp/share" target="_blank"
-       href="whatsapp://send?text={{ ("Voeg nu jouw +1 toe aan de pluseen " + pluseen_name + "!\n" + pluseen_description + "\nhttps://" + request.host + "/pluseen/" + pluseen_name|quote)|quote }}">
+       href="whatsapp://send?text={{ pluseen_invitation|quote }}">
         <i class="fab fa-whatsapp"></i> Delen via WhatsApp
     </a>
     <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Bekijk pluseen</a>
