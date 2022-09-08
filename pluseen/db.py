@@ -14,6 +14,7 @@ Deelnemer = NamedTuple("Record", [("id", int), ("name", str)])
 Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int), ("comment", str), ("updated_at", datetime)])
 
 
+# noinspection PyProtectedMember
 def get_db() -> psycopg2._psycopg.connection:
     if 'db' not in g:
         g.db = psycopg2.connect(DATABASE_URL, cursor_factory=NamedTupleCursor, sslmode="prefer")
@@ -109,14 +110,20 @@ def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
 
 def get_statuses(pluseen_id: int) -> [Status]:
     return do_query(
-        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at FROM deelnemers d LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id ORDER BY d.name",
+        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at "
+        "FROM deelnemers d "
+        "LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id "
+        "ORDER BY d.name",
         (pluseen_id,)
     )
 
 
 def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
     results = do_query(
-        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at FROM deelnemers d LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id WHERE d.name = %s",
+        "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at "
+        "FROM deelnemers d "
+        "LEFT JOIN (SELECT * FROM pluseendeelnemers p WHERE p.pluseen_id = %s) AS p ON d.id = p.deelnemer_id "
+        "WHERE d.name = %s",
         (pluseen_id, deelnemer_name)
     )
     if len(results) == 1:
@@ -127,6 +134,7 @@ def get_status(pluseen_id: int, deelnemer_name: str) -> Optional[Status]:
 
 def set_status(pluseen_id: int, deelnemer_id: int, status: int, comment: Optional[str]) -> None:
     do_query(
-        "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status, comment, updated_at) VALUES (%s, %s, %s, %s, now()) ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status, comment=excluded.comment, updated_at=now();",
+        "INSERT INTO pluseendeelnemers (pluseen_id, deelnemer_id, status, comment, updated_at) VALUES (%s, %s, %s, %s, now()) "
+        "ON CONFLICT (pluseen_id, deelnemer_id) DO UPDATE SET status=excluded.status, comment=excluded.comment, updated_at=now();",
         (pluseen_id, deelnemer_id, status, comment)
     )

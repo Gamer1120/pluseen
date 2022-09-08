@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-{% from "pluseen/create_pluseen.html" import create_pluseen %}
+{% from "pluseen/macro/create_pluseen.html" import create_pluseen %}
 
 {% block content %}
     <h1 class="text-center">
-        <a href="/" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
+        <div class="float-start">
+            <a href="/" class="btn btn-light">
+                <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
         {% block title %}Pluseens{% endblock %}
     </h1>
     {% for pluseen in pluseens %}

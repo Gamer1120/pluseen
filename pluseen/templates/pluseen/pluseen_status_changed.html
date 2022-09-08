@@ -3,7 +3,11 @@
 {% block content %}
     {% set word = "toegevoegd" if status == 1 else ("verwijderd" if status == -1 else "bijgewerkt") %}
     <h1 class="text-center">
-        <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
+        <div class="float-start">
+            <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-light">
+                <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
         {% block title %}Pluseen {{ word }}{% endblock %}
     </h1>
     <p>Je pluseen is {{ word }}!</p>

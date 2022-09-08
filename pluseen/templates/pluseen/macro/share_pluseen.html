@@ -1,0 +1,13 @@
+{% macro share_pluseen(pluseen_name, pluseen_invitation) %}
+    <textarea id="uitnodiging" class="form-control" rows="5" readonly aria-label="Pluseen uitnodiging">{{ pluseen_invitation }}</textarea>
+    <button id="copy-uitnodiging" type="button" class="btn btn-secondary" data-clipboard-target="#uitnodiging">
+        <i class="fas fa-clipboard-list"></i> Kopieer uitnodiging
+    </button>
+    <a class="btn btn-success" data-action="share/whatsapp/share" target="_blank"
+       href="whatsapp://send?text={{ pluseen_invitation|quote }}">
+        <i class="fab fa-whatsapp"></i> Delen via WhatsApp
+    </a>
+    <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-primary">Bekijk pluseen</a>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" crossorigin="anonymous"></script>
+    <script>new ClipboardJS("#copy-uitnodiging");</script>
+{% endmacro %}

@@ -1,0 +1,12 @@
+{% macro create_pluseen() %}
+    <form action="/pluseens/add" method="post" class="d-grid gap-2">
+        <label for="pluseen_name" class="form-label">Pluseen naam:</label>
+        <input type="text" id="pluseen_name" name="pluseen_name" class="form-control">
+        <label for="pluseen_description" class="form-label">Pluseen beschrijving (optioneel):</label>
+        <textarea id="pluseen_description" name="pluseen_description" class="form-control" rows="5"></textarea>
+        {% if error_msg is defined %}
+            <span class="text-danger">{{ error_msg }}</span>
+        {% endif %}
+        <button class="btn btn-primary">Toevoegen</button>
+    </form>
+{% endmacro %}

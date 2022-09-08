@@ -4,12 +4,11 @@
 {% block content %}
     <h1 class="text-center">
         <div class="float-start">
-            <a href="/pluseens/add" class="btn btn-light">
+            <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-light">
                 <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
             </a>
         </div>
-        {% block title %}Pluseen aangemaakt{% endblock %}
+        {% block title %}Pluseen delen{% endblock %}
     </h1>
-    <p class="text-break">De pluseen {{ pluseen_name }} is aangemaakt.</p>
     {{ share_pluseen(pluseen_name, pluseen_invitation) }}
 {% endblock content %}

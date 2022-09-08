@@ -2,9 +2,19 @@
 
 {% block content %}
     <h1 class="text-center">
-        <a href="/pluseens" class="btn btn-light float-start" style="margin-top: 0.5em; margin-right: -5em;"><i class="fas fa-arrow-left"></i></a>
-        <div class="text-nowrap" style="margin-left: 50px; overflow-y: hidden;" data-simplebar>
-            {% block title %}{{ pluseen_name }}{% endblock %}</div>
+        <div class="float-start">
+            <a href="/pluseens" class="btn btn-light">
+                <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+        <div class="float-end">
+            <a href="/pluseen/{{ pluseen_name|quote }}/share" class="btn btn-light">
+                <i class="fas fa-share" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+        <div class="text-nowrap" style="height: 3rem; margin-left: 50px; margin-right: 50px; overflow-y: hidden;" data-simplebar>
+            {% block title %}{{ pluseen_name }}{% endblock %}
+        </div>
     </h1>
     {% if pluseen_description %}
         <span class="text-break" style="white-space: pre-wrap;">{{ pluseen_description }}</span>
@@ -35,7 +45,7 @@
             {% if deelnemer.comment %}
                 <span class="bg-light text-center rounded-2 p-2 h-100 text-nowrap" style="width: 8em;">{{ deelnemer.name }}</span>
                 <span class="flex-grow-1 text-center p-2 h-100 text-nowrap" style="background-color: #dee2e6;" data-simplebar>
-                    <span class="p-2">{{ deelnemer.comment }}</span>
+                    <span class="pe-2">{{ deelnemer.comment }}</span>
                 </span>
             {% else %}
                 <span class="bg-light flex-grow-1 text-center rounded-2 p-2 h-100 text-nowrap">{{ deelnemer.name }}</span>
