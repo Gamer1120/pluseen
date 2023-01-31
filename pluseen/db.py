@@ -2,9 +2,9 @@ import os
 from datetime import datetime
 from typing import NamedTuple, Optional
 
-import psycopg2
+from psycopg import Connection
+from psycopg.rows import namedtuple_row
 from flask import g
-from psycopg2.extras import NamedTupleCursor
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/postgres")
 
@@ -14,10 +14,9 @@ Deelnemer = NamedTuple("Record", [("id", int), ("name", str)])
 Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int), ("comment", str), ("updated_at", datetime)])
 
 
-# noinspection PyProtectedMember
-def get_db() -> psycopg2._psycopg.connection:
+def get_db() -> Connection:
     if 'db' not in g:
-        g.db = psycopg2.connect(DATABASE_URL, cursor_factory=NamedTupleCursor, sslmode="prefer")
+        g.db = Connection.connect(DATABASE_URL, row_factory=namedtuple_row)
     return g.db
 
 
@@ -67,17 +66,12 @@ def close_db(e=None) -> None:
 def do_query(query: str, vars: Optional[tuple] = None):
     print(query, vars)
     db = get_db()
-    cursor = db.cursor()
-    try:
-        cursor.execute(query, vars)
+    with db.execute(query, vars, prepare=True) as cursor:
         if query.startswith("SELECT"):
-            result = cursor.fetchall()
-            return result
+            return cursor.fetchall()
         else:
             db.commit()
             return None
-    finally:
-        cursor.close()
 
 
 def list_pluseens() -> [Pluseen]:

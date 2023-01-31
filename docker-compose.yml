@@ -2,8 +2,8 @@
 version: "3.9"
 services:
   pluseen:
-    image: ghcr.io/gamer1120/pluseen:master # Pull prebuilt version
-#    build: . # Build local version
+#    image: ghcr.io/gamer1120/pluseen:master # Pull prebuilt version
+    build: . # Build local version
     restart: unless-stopped
     container_name: pluseen
     ports:
