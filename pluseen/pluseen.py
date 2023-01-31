@@ -1,11 +1,17 @@
 from typing import Optional
 from urllib.parse import quote
 
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, Response
 
 from pluseen import db
 
 bp = Blueprint("pluseen", __name__)
+
+
+@bp.after_request
+def add_headers(response: Response):
+    response.cache_control.no_store = True
+    return response
 
 
 @bp.route("/", methods=["GET"])
