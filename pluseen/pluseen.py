@@ -140,6 +140,37 @@ def share_pluseen(pluseen_name: str):
     )
 
 
+@bp.route("/pluseen/<pluseen_name>/edit", methods=["GET"])
+def view_edit_pluseen(pluseen_name: str):
+    """Share pluseen"""
+    pluseen = db.get_pluseen(pluseen_name)
+    if pluseen is None:
+        return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
+    description = pluseen.description
+    if description is None:
+        description = ""
+    return render_template(
+        "/pluseen/edit_pluseen.html",
+        pluseen_name=pluseen_name,
+        pluseen_description=description
+    )
+
+
+@bp.route("/pluseen/<pluseen_name>/edit", methods=["POST"])
+def edit_pluseen(pluseen_name: str):
+    """Share pluseen"""
+    pluseen = db.get_pluseen(pluseen_name)
+    if pluseen is None:
+        return render_template("/pluseen/pluseen_not_found.html", pluseen_name=pluseen_name)
+    description = request.form["pluseen_description"]
+    if not description or description.isspace():
+        description = None
+    else:
+        description = description.replace("\r", "")
+    db.update_pluseen(pluseen_name, description)
+    return redirect("/pluseen/" + quote(pluseen_name), code=302)
+
+
 @bp.route("/pluseen/<pluseen_name>/<deelnemer_name>", methods=["POST"])
 def set_pluseen_comment(pluseen_name: str, deelnemer_name: str):
     """Sets pluseen comment (accessible from get_pluseen_statuses)"""

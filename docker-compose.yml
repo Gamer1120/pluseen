@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     container_name: pluseen
     ports:
-      - 80:80
+      - "80:80"
     environment:
       - TZ=Europe/Amsterdam
       - DATABASE_URL=postgresql://pluseen:gerelateerd@postgres:5432/pluseen

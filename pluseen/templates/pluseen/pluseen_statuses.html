@@ -7,10 +7,23 @@
                 <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
             </a>
         </div>
-        <div class="float-end">
-            <a href="/pluseen/{{ pluseen_name|quote }}/share" class="btn btn-light">
-                <i class="fas fa-share" style="width: 16px; height: 16px;"></i>
-            </a>
+        <div class="dropdown float-end">
+            <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-chevron-down" style="width: 16px; height: 16px;"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="/pluseen/{{ pluseen_name|quote }}/share">
+                        <i class="fas fa-share" style="width: 16px; height: 16px;"></i> Delen
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/pluseen/{{ pluseen_name|quote }}/edit">
+                        <i class="fas fa-pen" style="width: 16px; height: 16px;"></i> Bewerken
+                    </a>
+                </li>
+            </ul>
+
         </div>
         <div class="text-nowrap" style="height: 3rem; margin-left: 50px; margin-right: 50px; overflow-y: hidden;" data-simplebar>
             {% block title %}{{ pluseen_name }}{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "pluseen/macro/create_pluseen.html" import create_pluseen %}
+
+{% block content %}
+    <h1 class="text-center">
+        <div class="float-start">
+            <a href="/pluseen/{{ pluseen_name|quote }}" class="btn btn-light">
+                <i class="fas fa-arrow-left" style="width: 16px; height: 16px;"></i>
+            </a>
+        </div>
+        {% block title %}Pluseen bewerken{% endblock %}
+    </h1>
+    <form action="/pluseen/{{ pluseen_name|quote }}/edit" method="post" class="d-grid gap-2">
+        <label for="pluseen_name" class="form-label">Pluseen naam:</label>
+        <input type="text" id="pluseen_name" name="pluseen_name" class="form-control" value="{{ pluseen_name }}" disabled>
+        <label for="pluseen_description" class="form-label">Pluseen beschrijving (optioneel):</label>
+        <textarea id="pluseen_description" name="pluseen_description" class="form-control" rows="5">{{ pluseen_description }}</textarea>
+        {% if error_msg is defined %}
+            <span class="text-danger">{{ error_msg }}</span>
+        {% endif %}
+        <button class="btn btn-primary">Opslaan</button>
+    </form>
+{% endblock content %}

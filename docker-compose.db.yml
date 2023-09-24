@@ -1,0 +1,16 @@
+# Docker-compose file for running the database for local development
+version: "3.9"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+    container_name: pluseen-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - TZ=Europe/Amsterdam
+      - POSTGRES_USER=pluseen
+      - POSTGRES_PASSWORD=gerelateerd
+      - POSTGRES_DB=pluseen
+    volumes:
+      - ./data:/var/lib/postgresql/data
