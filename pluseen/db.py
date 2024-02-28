@@ -2,9 +2,9 @@ import os
 from datetime import datetime
 from typing import NamedTuple, Optional
 
+from flask import g
 from psycopg import Connection
 from psycopg.rows import namedtuple_row
-from flask import g
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/postgres")
 
@@ -88,6 +88,10 @@ def get_pluseen(pluseen_name: str) -> Optional[Pluseen]:
 
 def add_pluseen(pluseen_name: str, description: Optional[str] = None) -> None:
     do_query("INSERT INTO pluseens (name, description, created_at) VALUES (%s, %s, now()) ON CONFLICT DO NOTHING;", (pluseen_name, description))
+
+
+def update_pluseen(pluseen_name: str, description: Optional[str] = None) -> None:
+    do_query("UPDATE pluseens SET description = %s WHERE name = %s;", (description, pluseen_name))
 
 
 def list_deelnemers() -> [Deelnemer]:
