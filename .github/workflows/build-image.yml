@@ -11,6 +11,7 @@ on:
   schedule:
     # Monthly base image and dependencies update check
     - cron: '0 5 1 * *' # 05:00 1st day of the month
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
