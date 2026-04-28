@@ -4,9 +4,9 @@ from typing import NamedTuple, Optional
 
 from flask import g
 from psycopg import Connection
-from psycopg.rows import namedtuple_row
+from psycopg.rows import Row, namedtuple_row
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/postgres")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://pluseen:gerelateerd@localhost:5432/pluseen")
 
 # Types
 Pluseen = NamedTuple("Record", [("id", int), ("name", str), ("description", str), ("created_at", datetime)])
@@ -63,7 +63,7 @@ def close_db(e=None) -> None:
         db.close()
 
 
-def do_query(query: str, vars: Optional[tuple] = None):
+def do_query(query: str, vars: Optional[tuple] = None) -> list[Row]:
     print(query, vars)
     db = get_db()
     with db.execute(query, vars, prepare=True) as cursor:
@@ -71,10 +71,10 @@ def do_query(query: str, vars: Optional[tuple] = None):
             return cursor.fetchall()
         else:
             db.commit()
-            return None
+            return []
 
 
-def list_pluseens() -> [Pluseen]:
+def list_pluseens() -> list[Pluseen]:
     return do_query("SELECT * FROM pluseens ORDER BY DATE_TRUNC('day', created_at) DESC, LOWER(name);")
 
 
@@ -94,7 +94,7 @@ def update_pluseen(pluseen_name: str, description: Optional[str] = None) -> None
     do_query("UPDATE pluseens SET description = %s WHERE name = %s;", (description, pluseen_name))
 
 
-def list_deelnemers() -> [Deelnemer]:
+def list_deelnemers() -> list[Deelnemer]:
     return do_query("SELECT * FROM deelnemers ORDER BY name;")
 
 
@@ -106,7 +106,7 @@ def get_deelnemer(deelnemer_name: str) -> Optional[Deelnemer]:
         return None
 
 
-def get_statuses(pluseen_id: int) -> [Status]:
+def get_statuses(pluseen_id: int) -> list[Status]:
     return do_query(
         "SELECT d.id, d.name, COALESCE(p.status, 0) AS status, p.comment, p.updated_at "
         "FROM deelnemers d "
