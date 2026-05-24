@@ -4,6 +4,7 @@ from urllib.parse import quote
 from flask import Blueprint, render_template, redirect, request, Response
 
 from pluseen import db
+from pluseen.auth import login_required
 
 bp = Blueprint("pluseen", __name__)
 
@@ -15,12 +16,14 @@ def add_headers(response: Response):
 
 
 @bp.route("/", methods=["GET"])
+@login_required
 def home():
     """Overview of all options"""
     return render_template("/pluseen/home.html")
 
 
 @bp.route("/pluseens", methods=["GET"])
+@login_required
 def list_pluseens():
     """List pluseens"""
     pluseens = db.list_pluseens()
@@ -28,12 +31,14 @@ def list_pluseens():
 
 
 @bp.route("/pluseens/add", methods=["GET"])
+@login_required
 def create_pluseen():
     """Add new pluseen"""
     return render_template("/pluseen/create_pluseen.html")
 
 
 @bp.route("/pluseens/add", methods=["POST"])
+@login_required
 def add_pluseen():
     """Adds new pluseen (accessible from create_pluseen)"""
     pluseen_name: str = request.form["pluseen_name"]
@@ -45,7 +50,7 @@ def add_pluseen():
             pluseen_description=pluseen_description,
             error_msg="Pluseen naam mag niet leeg zijn."
         )
-    if '/' in pluseen_name:
+    if "/" in pluseen_name:
         return render_template(
             "/pluseen/create_pluseen.html",
             pluseen_name=pluseen_name,
@@ -73,6 +78,7 @@ def add_pluseen():
 
 
 @bp.route("/deelnemers", methods=["GET"])
+@login_required
 def list_deelnemers():
     """List deelnemers"""
     deelnemers = db.list_deelnemers()
@@ -80,6 +86,7 @@ def list_deelnemers():
 
 
 @bp.route("/pluseen/<pluseen_name>", methods=["GET"])
+@login_required
 def get_pluseen_statuses(pluseen_name: str):
     """Gets pluseen statuses"""
     pluseen = db.get_pluseen(pluseen_name)
@@ -95,6 +102,7 @@ def get_pluseen_statuses(pluseen_name: str):
 
 
 @bp.route("/pluseen/<pluseen_name>", methods=["POST"])
+@login_required
 def set_pluseen_status(pluseen_name: str):
     """Sets pluseen status (accessible from get_pluseen_statuses)"""
     pluseen = db.get_pluseen(pluseen_name)
@@ -127,6 +135,7 @@ def set_pluseen_status(pluseen_name: str):
 
 
 @bp.route("/pluseen/<pluseen_name>/share", methods=["GET"])
+@login_required
 def share_pluseen(pluseen_name: str):
     """Share pluseen"""
     pluseen = db.get_pluseen(pluseen_name)
@@ -141,6 +150,7 @@ def share_pluseen(pluseen_name: str):
 
 
 @bp.route("/pluseen/<pluseen_name>/edit", methods=["GET"])
+@login_required
 def view_edit_pluseen(pluseen_name: str):
     """Share pluseen"""
     pluseen = db.get_pluseen(pluseen_name)
@@ -157,6 +167,7 @@ def view_edit_pluseen(pluseen_name: str):
 
 
 @bp.route("/pluseen/<pluseen_name>/edit", methods=["POST"])
+@login_required
 def edit_pluseen(pluseen_name: str):
     """Share pluseen"""
     pluseen = db.get_pluseen(pluseen_name)
@@ -172,6 +183,7 @@ def edit_pluseen(pluseen_name: str):
 
 
 @bp.route("/pluseen/<pluseen_name>/<deelnemer_name>", methods=["POST"])
+@login_required
 def set_pluseen_comment(pluseen_name: str, deelnemer_name: str):
     """Sets pluseen comment (accessible from get_pluseen_statuses)"""
     pluseen = db.get_pluseen(pluseen_name)

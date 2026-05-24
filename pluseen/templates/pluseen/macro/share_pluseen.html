@@ -1,6 +1,6 @@
 {% macro share_pluseen(pluseen_name, pluseen_invitation) %}
     <textarea id="uitnodiging" class="form-control" rows="5" readonly aria-label="Pluseen uitnodiging">{{ pluseen_invitation }}</textarea>
-    <button id="copy-uitnodiging" type="button" class="btn btn-secondary" data-clipboard-target="#uitnodiging">
+    <button type="button" id="copy-uitnodiging" class="btn btn-secondary" data-clipboard-target="#uitnodiging">
         <i class="fas fa-clipboard-list"></i> Kopieer uitnodiging
     </button>
     <a class="btn btn-success" data-action="share/whatsapp/share" target="_blank"

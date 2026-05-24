@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">{% block title %}Login{% endblock %}</h1>
+    <form method="post" class="d-grid gap-2">
+        <label for="password" class="form-label">Wat is de naam van de vriendengroep?</label>
+        <input type="text" id="password" name="password" class="form-control"/>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    {%if error_msg is defined %}
+        <div class="alert alert-danger" role="alert">
+           {{ error_msg }}
+        </div>
+    {% endif %}
+{% endblock content %}

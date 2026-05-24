@@ -22,7 +22,7 @@
     <form method="post">
         <input type="hidden" name="deelnemer_name" value="{{ deelnemer_name }}">
         <input type="hidden" name="status" value="{{ prev_status }}">
-        <button class="btn btn-secondary w-100 h-100">Wijziging ongedaan maken</button>
+        <button type="submit" class="btn btn-secondary w-100 h-100">Wijziging ongedaan maken</button>
     </form>
     {% if status == 1 %}
         <script src="{{ url_for('static', filename='confetti.min.js') }}"></script>

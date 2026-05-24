@@ -1,17 +1,31 @@
+from datetime import timedelta
+from os import getenv
+
 from flask import Flask
 
 
 def create_app():
     app = Flask(__name__)
 
+    app.config.update(
+        SECRET_KEY=getenv("SECRET_KEY", "development"),
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SECURE=not app.debug,
+        SESSION_REFRESH_EACH_REQUEST=True,
+        PERMANENT_SESSION_LIFETIME=timedelta(days=1095),
+    )
+
     from urllib.parse import quote
-    app.jinja_env.filters['quote'] = lambda u: quote(u)
+    app.jinja_env.filters["quote"] = lambda u: quote(u)
 
     from pytz import timezone
-    app.jinja_env.filters['time'] = lambda t: t.astimezone(timezone('Europe/Amsterdam')).strftime('%d-%m-%Y')
+    app.jinja_env.filters["time"] = lambda t: t.astimezone(timezone("Europe/Amsterdam")).strftime("%d-%m-%Y")
 
     from pluseen import db
     app.teardown_appcontext(db.close_db)
+
+    from pluseen import auth
+    app.register_blueprint(auth.bp)
 
     from pluseen import pluseen
     app.register_blueprint(pluseen.bp)

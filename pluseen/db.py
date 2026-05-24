@@ -1,12 +1,12 @@
-import os
 from datetime import datetime
+from os import getenv
 from typing import NamedTuple, Optional
 
 from flask import g
 from psycopg import Connection
 from psycopg.rows import Row, namedtuple_row
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://pluseen:gerelateerd@localhost:5432/pluseen")
+DATABASE_URL = getenv("DATABASE_URL", "postgresql://pluseen:gerelateerd@localhost:5432/pluseen")
 
 # Types
 Pluseen = NamedTuple("Record", [("id", int), ("name", str), ("description", str), ("created_at", datetime)])
@@ -15,7 +15,7 @@ Status = NamedTuple("Record", [("id", int), ("name", str), ("status", int), ("co
 
 
 def get_db() -> Connection:
-    if 'db' not in g:
+    if "db" not in g:
         g.db = Connection.connect(DATABASE_URL, row_factory=namedtuple_row)
     return g.db
 
@@ -57,16 +57,17 @@ def init_db() -> None:
             do_query(f"CREATE TABLE {table} ({table_definition});")
 
 
+# noinspection PyUnusedLocal
 def close_db(e=None) -> None:
-    db = g.pop('db', None)
+    db = g.pop("db", None)
     if db is not None:
         db.close()
 
 
-def do_query(query: str, vars: Optional[tuple] = None) -> list[Row]:
-    print(query, vars)
+def do_query(query: LiteralString, params: Optional[tuple] = None) -> list[Row]:
+    print(query, params)
     db = get_db()
-    with db.execute(query, vars, prepare=True) as cursor:
+    with db.execute(query, params, prepare=True) as cursor:
         if query.startswith("SELECT"):
             return cursor.fetchall()
         else:

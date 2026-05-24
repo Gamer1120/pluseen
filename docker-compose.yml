@@ -9,6 +9,7 @@ services:
       - "80:80"
     environment:
       - TZ=Europe/Amsterdam
+      - SECRET_KEY=development
       - DATABASE_URL=postgresql://pluseen:gerelateerd@postgres:5432/pluseen
   postgres:
     image: postgres:18-alpine
